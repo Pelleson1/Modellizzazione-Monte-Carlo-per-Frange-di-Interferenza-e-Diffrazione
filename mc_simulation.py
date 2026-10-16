@@ -74,15 +74,14 @@ def sum_n_i_experiments(A, N_, x):
     return N_c
 
 
-B = 20 
-I = 400
-alpha = 0.9 #mm-1
-delta = 5.2 #mm-1
+B = 20          # u.d.m: conteggi/bin
+I = 400         # u.d.m: conteggi/bin
+alpha = 0.9     # u.d.m: mm^-1
+delta = 5.2     # u.d.m: mm^-1
+
 x_min = -5
 x_max = 5
 N_bin = 161
-N_experiments = 2000
-
 
 x_plot = np.linspace(x_min, x_max, N_bin)
 mu_plot = mu(x_plot, B, I, alpha, delta)
@@ -90,11 +89,12 @@ mu_sup_plot = mu_sup(x_plot, B, I, alpha)
 B_plot = np.full(N_bin, B)
 
 rng = np.random.default_rng(18032006)
-n_i = rng.poisson(lam=mu(x_plot, B, I, alpha, delta), size=N_bin)
+n_i = rng.poisson(lam=mu_plot, size=N_bin)
 n_i_err = np.sqrt(n_i)
 mu_c = sum_n_i(mu(x_plot, B, I, alpha, delta), x_plot)
 res = sum_n_i(n_i, x_plot) - mu_c
-sigma_res = np.sqrt(sum_n_i(mu(x_plot, B, I, alpha, delta), x_plot))
+
+N_experiments = 2000
 
 A = N_experiments_matrix(N_experiments, N_bin, x_plot, B, I, alpha, delta, )
 N_c = sum_n_i_experiments(A, N_experiments, x_plot)
@@ -106,22 +106,25 @@ sigma_N_c = np.sqrt(mu_c)
 
 fig, axes = plt.subplots(1, 3, figsize=(10.5, 3.8))
 axes[0].plot(x_plot, mu_plot, color="tab:red", label="mu")
-axes[0].plot(x_plot, B_plot, color="tab:blue", label="inf mu")
-axes[0].plot(x_plot, mu_sup_plot, color="tab:green", label="sup mu")
+axes[0].plot(x_plot, B_plot, color="tab:blue", linestyle="--", label="inf mu")
+axes[0].plot(x_plot, mu_sup_plot, color="tab:green", linestyle="--", label="sup mu")
 axes[0].grid(True)
+axes[0].legend()
 
 axes[1].scatter(x_plot, n_i, color="tab:blue", label="poissoniana")
 axes[1].errorbar(x_plot, n_i, n_i_err, fmt='o', color="tab:blue")
+axes[1].legend()
 
 axes[2].hist(N_c, N_experiments, density=True, color="tab:green", label="Dati")
 axes[2].axvline(N_c_mean, color="red", linestyle="--", linewidth=2, label="Media simulata")
 axes[2].axvline(N_c_mean, color="blue", linestyle=":", linewidth=2, label="Valore atteso")
+axes[2].legend()
 
 print("La funzione è non negativa: ", mu_is_positive0(x_plot, B, I, alpha, delta))
 print("La funzione è simmetrica: ",mu_is_simmetric(x_plot, B, I, alpha, delta))
 print("La funzione in zero è ben definita: ", mu_in_0(np.full(N_bin, 0), B, I, alpha, delta))
 
-print("Compatibilità tra mu_c e N_c entro un sigma_N_c (prima simulazione): ", compare_with_error (res_mu, sigma_N_c))
+print("Compatibilità tra mu_c e N_c entro un sigma_N_c (prima simulazione): ", compare_with_error (res, sigma_N_c))
 
 print ("Media della distribuzione di N_c: ", N_c_mean)
 print ("Deviazione standard della distribuzione di N_c: ", N_c_std)
@@ -129,5 +132,4 @@ print ("Deviazione della media della distribuzione di N_c: ", N_c_mean_std)
 print("Compatibilità tra mu_c e N_c_mean entro un sigma_N_c: ", compare_with_error (res_mu, sigma_N_c))
 
 plt.tight_layout()
-plt.legend()
 plt.show()
