@@ -17,8 +17,8 @@ Dove:
 ## Obiettivi dell'esperimento virtuale
 
 Il notebook è strutturato in tre fasi principali:
-1. **Costruzione e controllo del modello teorico:** Verifica delle proprietà matematiche della funzione (non negatività, simmetria, rimozione della singolarità in $x=0$).
-2. **Simulazione di una singola acquisizione:** Generazione di un campionamento casuale estratto da una distribuzione Poissoniana e confronto dei conteggi nella regione centrale con le fluttuazioni statistiche attese ($\sqrt{\mu_c}$).
+1. **Costruzione e controllo del modello teorico:** Verifica delle proprietà matematiche della funzione (non negatività, simmetria, risoluzione della singolarità in $x=0$).
+2. **Simulazione di una singola acquisizione:** Generazione di un campionamento casuale estratto da una distribuzione Poissoniana e confronto dei conteggi in una regione centrale con le fluttuazioni statistiche attese.
 3. **Distribuzione dello stimatore:** Ripetizione dell'esperimento per 2000 volte per estrarre la distribuzione di probabilità dei conteggi, calcolando media e deviazione standard campionaria.
 
 ## Strumenti e librerie utilizzate
