@@ -1,8 +1,6 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy import stats
-from scipy.optimize import curve_fit
 
 def E(x, alpha):
     return  np.sinc(alpha*x/np.pi)**2
@@ -120,16 +118,20 @@ axes[2].axvline(N_c_mean, color="red", linestyle="--", linewidth=2, label="Media
 axes[2].axvline(N_c_mean, color="blue", linestyle=":", linewidth=2, label="Valore atteso")
 axes[2].legend()
 
+print("\n================================================================================================")
+
 print("La funzione è non negativa: ", mu_is_positive0(x_plot, B, I, alpha, delta))
 print("La funzione è simmetrica: ",mu_is_simmetric(x_plot, B, I, alpha, delta))
-print("La funzione in zero è ben definita: ", mu_in_0(np.full(N_bin, 0), B, I, alpha, delta))
+print("La funzione in zero è ben definita: ", mu_in_0(np.full(N_bin, 0), B, I, alpha, delta), '\n')
 
-print("Compatibilità tra mu_c e N_c entro un sigma_N_c (prima simulazione): ", compare_with_error (res, sigma_N_c))
+print("Compatibilità tra mu_c e N_c entro un sigma_N_c (prima simulazione): ", compare_with_error (res, sigma_N_c), '\n')
 
 print ("Media della distribuzione di N_c: ", N_c_mean)
 print ("Deviazione standard della distribuzione di N_c: ", N_c_std)
 print ("Deviazione della media della distribuzione di N_c: ", N_c_mean_std)
-print("Compatibilità tra mu_c e N_c_mean entro un sigma_N_c: ", compare_with_error (res_mu, sigma_N_c))
+print("Compatibilità tra mu_c e N_c_mean entro un sigma_N_c (tutte le simulazioni): ", compare_with_error (res_mu, sigma_N_c))
+
+print("================================================================================================\n")
 
 plt.tight_layout()
 plt.show()
