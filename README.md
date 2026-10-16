@@ -23,7 +23,7 @@ Il notebook è strutturato in tre fasi principali:
 
 ## Strumenti e librerie utilizzate
 
-* **Python 3.x**
+* **Python 3.12.3**
 * **Jupyter Notebook**
 * **NumPy**: Per la generazione degli array, il calcolo vettoriale e il campionamento statistico.
 * **Matplotlib**: Per la visualizzazione grafica delle curve teoriche, delle barre di errore e degli istogrammi.
