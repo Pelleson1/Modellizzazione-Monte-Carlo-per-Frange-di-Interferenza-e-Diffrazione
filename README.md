@@ -1,4 +1,4 @@
-# Simulazione Monte Carlo: Interferenza e Diffrazione
+# Modellizzazione Monte Carlo per Frange di Interferenza e Diffrazione
 
 Questo progetto contiene un esperimento virtuale sviluppato in Python il cui obiettivo è simulare l'acquisizione di un segnale luminoso caratterizzato da frange di interferenza modulate da un inviluppo di diffrazione, studiando il comportamento statistico del sistema attraverso il metodo Monte Carlo.
 
