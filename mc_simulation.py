@@ -90,7 +90,7 @@ rng = np.random.default_rng(18032006)
 n_i = rng.poisson(lam=mu_plot, size=N_bin)
 n_i_err = np.sqrt(n_i)
 mu_c = sum_n_i(mu(x_plot, B, I, alpha, delta), x_plot)
-res = sum_n_i(n_i, x_plot) - mu_c
+res = abs(sum_n_i(n_i, x_plot) - mu_c)
 
 N_experiments = 2000
 
@@ -99,7 +99,7 @@ N_c = sum_n_i_experiments(A, N_experiments, x_plot)
 N_c_mean = np.mean(N_c)
 N_c_std = np.std(N_c, ddof=1)
 N_c_mean_std = np.std(N_c, ddof=1)/np.sqrt(len(N_c))
-res_mu = N_c_mean - mu_c
+res_mu = abs(N_c_mean - mu_c)
 sigma_N_c = np.sqrt(mu_c)
 
 fig, axes = plt.subplots(1, 3, figsize=(10.5, 3.8))
