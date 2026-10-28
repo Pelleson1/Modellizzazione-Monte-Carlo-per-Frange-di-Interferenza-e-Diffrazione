@@ -1,6 +1,7 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+    
 
 def E(x, alpha):
     return  np.sinc(alpha*x/np.pi)**2
@@ -86,7 +87,7 @@ mu_plot = mu(x_plot, B, I, alpha, delta)
 mu_sup_plot = mu_sup(x_plot, B, I, alpha)
 B_plot = np.full(N_bin, B)
 
-rng = np.random.default_rng(18032006)
+rng = np.random.default_rng(106)
 n_i = rng.poisson(lam=mu_plot, size=N_bin)
 n_i_err = np.sqrt(n_i)
 mu_c = sum_n_i(mu(x_plot, B, I, alpha, delta), x_plot)
@@ -120,18 +121,30 @@ axes[2].legend()
 
 print("\n================================================================================================")
 
-print("La funzione è non negativa: ", mu_is_positive0(x_plot, B, I, alpha, delta))
-print("La funzione è simmetrica: ",mu_is_simmetric(x_plot, B, I, alpha, delta))
-print("La funzione in zero è ben definita: ", mu_in_0(np.full(N_bin, 0), B, I, alpha, delta), '\n')
+print("La funzione Ã¨ non negativa: ", mu_is_positive0(x_plot, B, I, alpha, delta))
+print("La funzione Ã¨ simmetrica: ",mu_is_simmetric(x_plot, B, I, alpha, delta))
+print("La funzione in zero Ã¨ ben definita: ", mu_in_0(np.full(N_bin, 0), B, I, alpha, delta), '\n')
 
-print("Compatibilità tra mu_c e N_c entro un sigma_N_c (prima simulazione): ", compare_with_error (res, sigma_N_c), '\n')
+print("CompatibilitÃ  tra mu_c e N_c entro un sigma_N_c (prima simulazione): ", compare_with_error (res, sigma_N_c), '\n')
 
 print ("Media della distribuzione di N_c: ", N_c_mean)
 print ("Deviazione standard della distribuzione di N_c: ", N_c_std)
 print ("Deviazione della media della distribuzione di N_c: ", N_c_mean_std)
-print("Compatibilità tra mu_c e N_c_mean entro un sigma_N_c (tutte le simulazioni): ", compare_with_error (res_mu, sigma_N_c))
+print("CompatibilitÃ  tra mu_c e N_c_mean entro un sigma_N_c (tutte le simulazioni): ", compare_with_error (res_mu, sigma_N_c))
 
 print("================================================================================================\n")
 
 plt.tight_layout()
 plt.show()
+
+Y = np.zeros(N_bin)
+for i in range (N_bin):
+    Y[i] = sum(A[:, i])/N_experiments 
+
+Y_sigma = np.sqrt(Y)/np.sqrt(N_experiments)
+
+X = np.linspace(x_min, x_max, N_bin)
+
+data = np.column_stack((X, Y, Y_sigma))
+
+np.savetxt('data.csv', data, delimiter=',', fmt=['%.4f', '%.4f', '%.4f'], header='x, y, sigma_y', comments='')
