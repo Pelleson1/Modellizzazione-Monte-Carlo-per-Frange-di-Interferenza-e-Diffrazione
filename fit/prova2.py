@@ -102,7 +102,10 @@ axes['B'].legend()
 
 print(f"Chi2_red_obs = {float(chi2_red_obs):.4f}")
 print(f"p value = {float(p_value):.4f}")
+print("covarianza sigma_alpha_delta = ", corr)
 print("==============================================================\n")
 
 plt.tight_layout()
 plt.show()
+
+
