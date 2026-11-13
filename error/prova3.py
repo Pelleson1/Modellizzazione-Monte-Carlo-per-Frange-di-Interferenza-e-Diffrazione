@@ -59,12 +59,11 @@ corr = C_z / den
 
 C_g = J @ C_z @ J.T
 var = np.sqrt(np.diag(C_g))
+print("\n==============================================================\n")
+
 print("a = ", g(z)[0], " +/- ", var[0])
 print("d = ", g(z)[1], " +/- ", var[1])
 print("q = ", g(z)[2], " +/- ", var[2])
-
-print (corr)
-print ("autovalori = ", eigvals)
 
 
 
@@ -86,7 +85,7 @@ sx_mc = campioni[:, 3]
 
 a_mc = alpha_mc/(k_mc * sx_mc)
 d_mc = delta_mc/(k_mc * sx_mc)
-
+q_mc = d_mc/a_mc
 
 
 alpha_hat = np.mean(alpha_mc)
@@ -109,12 +108,21 @@ p16_delta, p84_delta = np.percentile(delta_mc, [16, 84])
 p16_k, p84_k = np.percentile(k_mc, [16, 84])
 p16_sx, p84_sx = np.percentile(sx_mc, [16, 84])
 
+print("a stimato mc = ", np.mean(a_mc), " +/- ", np.std(a_mc, ddof=1))
+print("d stimato mc = ", np.mean(d_mc), " +/- ", np.std(d_mc, ddof=1))
+print("q stimato mc = ", np.mean(q_mc), " +/- ", np.std(q_mc, ddof=1))
+print("\n==============================================================\n")
+
+
+
+
+
 layout = """
 AC
 BC
 """
 
-counts, xedges, yedges, image = plt.hist2d(a_mc, d_mc, bins=100000, cmap='viridis')
+#counts, xedges, yedges, image = plt.hist2d(a_mc, d_mc, bins=100, cmap='viridis')
 
 fig, axes = plt.subplot_mosaic(layout, figsize=(10.5, 7.8))
 im = axes['C'].imshow(corr, vmin=-1, vmax=1, cmap="plasma")
@@ -122,5 +130,6 @@ fig.colorbar(im, ax=axes['C'], fraction=0.046, shrink=1.0, label="correlazione")
 axes['C'].set_xticks([0, 1, 2, 3], ["alpha", "delta", "k", "Sx"])
 axes['C'].set_yticks([0, 1, 2, 3], ["alpha", "delta", "k", "Sx"])
 axes['C'].set_title("Matrice di correlazione dei parametri")
+axes['A'].hist2d(a_mc, d_mc, bins=2000, cmap='viridis')
 plt.tight_layout()
 plt.show()
